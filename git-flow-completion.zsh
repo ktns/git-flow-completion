@@ -250,7 +250,7 @@ __git-flow-feature ()
 				(rebase)
 					_arguments \
 						-i'[Do an interactive rebase]' \
-						':branch:__git_branch_names'
+						':branch:__git_flow_feature_list'
 				;;
 
 				(checkout)
