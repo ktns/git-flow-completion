@@ -239,7 +239,7 @@ __git-flow-feature ()
 
 				(track)
 					_arguments \
-						':feature:__git_flow_feature_list'\
+						':remote_feature:__git_flow_remote_feature_list'\
 				;;
 
 				(diff)
@@ -293,6 +293,18 @@ __git_flow_feature_list ()
 	__git_command_successful || return
 
 	_wanted features expl 'feature' compadd $features
+}
+
+__git_flow_remote_feature_list ()
+{
+	local expl prefix
+	declare -a remote_features
+
+	git config --get gitflow.prefix.feature | read prefix
+	remote_features=(${${(f)"$(_call_program remote_features "git branch -r 2> /dev/null | tr -d ' |* ' | sed -e '\\|^[^/]*/${prefix}|!d;s|^.*/${prefix}||'")"}})
+	__git_command_successful || return
+
+	_wanted remote_features expl 'remote_feature' compadd $remote_features
 }
 
 __git_remotes () {
